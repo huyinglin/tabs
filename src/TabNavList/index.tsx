@@ -102,10 +102,12 @@ function TabNavList(props: TabNavListProps, ref: React.Ref<HTMLDivElement>) {
     transformMin = 0;
     transformMax = Math.max(0, wrapperScrollWidth - wrapperWidth);
   } else {
+    // 正常模型
     transformMin = Math.min(0, wrapperWidth - wrapperScrollWidth);
     transformMax = 0;
   }
 
+  // ?
   function alignInRange(value: number): [number, boolean] {
     if (value < transformMin) {
       return [transformMin, false];
@@ -174,13 +176,20 @@ function TabNavList(props: TabNavListProps, ref: React.Ref<HTMLDivElement>) {
 
   // ========================= Scroll ========================
   function scrollToTab(key = activeKey) {
-    const tabOffset = tabOffsets.get(key);
+    const tabOffset = tabOffsets.get(key); // 获取一个tab的位置信息
+    // tabOffset:
+    // -height: 39
+    // -left: 69
+    // -right: -123
+    // -top: 0
+    // -width: 123
 
     if (!tabOffset) return;
 
     if (tabPositionTopOrBottom) {
       // ============ Align with top & bottom ============
       let newTransform = transformLeft;
+      console.log('transformLeft: ', transformLeft);
 
       // RTL
       if (rtl) {
@@ -196,7 +205,7 @@ function TabNavList(props: TabNavListProps, ref: React.Ref<HTMLDivElement>) {
       } else if (tabOffset.left + tabOffset.width > -transformLeft + wrapperWidth) {
         newTransform = -(tabOffset.left + tabOffset.width - wrapperWidth);
       }
-
+      console.log('newTransform: ', newTransform);
       setTransformTop(0);
       setTransformLeft(alignInRange(newTransform)[0]);
     } else {
@@ -306,6 +315,15 @@ function TabNavList(props: TabNavListProps, ref: React.Ref<HTMLDivElement>) {
   });
 
   // ======================== Dropdown =======================
+  /**
+   * tabs = [1, 2, 3, 4, 5];
+   *
+   * 当overflow时，只能展示中间的[2, 3]
+   *
+   * startHiddenTabs: [1]
+   * endHiddenTabs: [4, 5]
+   *
+   */
   const startHiddenTabs = tabs.slice(0, visibleStart);
   const endHiddenTabs = tabs.slice(visibleEnd + 1);
   const hiddenTabs = [...startHiddenTabs, ...endHiddenTabs];
@@ -377,7 +395,7 @@ function TabNavList(props: TabNavListProps, ref: React.Ref<HTMLDivElement>) {
     pingTop = transformTop < 0;
     pingBottom = -transformTop + wrapperHeight < wrapperScrollHeight;
   }
-
+  console.log('inkStyle: ', inkStyle);
   /* eslint-disable jsx-a11y/interactive-supports-focus */
   return (
     <div

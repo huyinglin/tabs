@@ -41,7 +41,7 @@ export interface TabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'o
 
   activeKey?: string;
   defaultActiveKey?: string;
-  direction?: 'ltr' | 'rtl';
+  direction?: 'ltr' | 'rtl'; // 文字方向
   animated?: boolean | AnimatedConfig;
   renderTabBar?: RenderTabBar;
   tabBarExtraContent?: React.ReactNode;
