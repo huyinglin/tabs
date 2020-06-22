@@ -228,6 +228,7 @@ function TabNavList(props: TabNavListProps, ref: React.Ref<HTMLDivElement>) {
     { ...props, tabs },
   );
 
+  // 获取附加区域宽度｜高度
   function getAdditionalSpaceSize(type: 'offsetWidth' | 'offsetHeight') {
     const addBtnSize = innerAddButtonRef.current?.[type] || 0;
     let optionsSize = 0;
