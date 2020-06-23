@@ -8,6 +8,7 @@ export default function useOffsets(tabs: Tab[], tabSizes: TabSizeMap, holderScro
     const map: TabOffsetMap = new Map();
 
     const lastOffset = tabSizes.get(tabs[0]?.key) || DEFAULT_SIZE;
+    console.log('lastOffset: ', lastOffset);
     const rightOffset = lastOffset.left + lastOffset.width;
 
     for (let i = 0; i < tabs.length; i += 1) {
@@ -22,7 +23,9 @@ export default function useOffsets(tabs: Tab[], tabSizes: TabSizeMap, holderScro
       const entity = (map.get(key) || { ...data }) as TabOffset;
 
       // Right
+      // right是为了处理 rtl 的情况
       entity.right = rightOffset - entity.left - entity.width;
+      console.log(`entity: ${key}`, entity);
 
       // Update entity
       map.set(key, entity);
